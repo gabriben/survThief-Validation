@@ -1,0 +1,40 @@
+detach("package:survThief", unload=TRUE)
+install.packages("/Users/gabrielbenedict/Google_Drive/docs/UNIS/KU Leuven/Courses/Master Thesis/Digitize Survival Curves in sections/Code/survThief", repos = NULL, type="source")
+library(survThief)
+
+atRisk <- data.frame(time= c(0, 3 , 5, 7),
+                     blue=c(276, 166, 119, 79),
+                     green=c(42, 24, 12, 2))
+
+
+setwd("/Users/gabrielbenedict/Google_Drive/docs/UNIS/KU Leuven/Courses/Master Thesis/Reconstructions/reproducing survival meta analysis/Reconstructed/Yoshitake")
+
+
+## library(imager)
+## click <- digi(load.image("Yoshitake original.png"))
+## save(click, file = "click.RData")
+
+load("click.RData")
+
+img <- survThief("Yoshitake original.png", atRisk, clickData = click,
+                 quantization = T, method = "exact")
+
+load("Yoshitake.RData")
+names(img)[1:2] <- c("open", "hybrid")
+img$survData$stratum[img$survData$stratum == "green"] <- "hybrid"
+img$survData$stratum[img$survData$stratum == "blue"] <- "open"
+save(img, file = "Yoshitake.RData")
+
+library(survival)
+fit <- survfit(Surv(time, status) ~ stratum, data=img$survData)
+
+library(survminer)
+## pdf("guyot.pdf",width=14,height=10)
+ggsurvplot(fit, risk.table = T, tables.theme = theme_cleantable(),
+           palette = substring(names(fit$strata), nchar("stratum= ")),
+           risk.table.col = "strata", RUEpval = TRUE, 
+           ggtheme = theme_bw(), risk.table.y.text=F,
+           break.time.by=2)
+## dev.off()
+
+## save(demo, file="results/detectCensoring V3.RData")

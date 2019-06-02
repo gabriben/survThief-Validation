@@ -1,0 +1,78 @@
+detach("package:survThief", unload=TRUE)
+install.packages("/Users/gabrielbenedict/Google_Drive/docs/UNIS/KU Leuven/Courses/Master Thesis/survThief", repos = NULL, type="source")
+library(survThief)
+
+setwd("/Users/gabrielbenedict/Google_Drive/docs/UNIS/KU Leuven/Courses/Master Thesis/Validation")
+
+## clickSmall <- digi(load.image("plots/small_sim01.png"))
+## clickMedium <- digi(load.image("plots/medium_sim01.png"))
+## clickLarge <- digi(load.image("plots/large_sim01.png"))
+
+## clicks <- list(small = clickSmall,
+##                large = clickLarge)
+##                medium = clickMedium,
+## save(clicks, file = "clicks.RData")
+
+load("clicks.RData")
+load("atRisk.RData")
+
+sims <- 50
+dimsNames <- c("small", "medium", "large")
+IPDRec <- rep(list(list()), 3)
+names(IPDRec) <- dimsNames
+runTimes <- data.frame(small = 0, medium = 0, large = 0)
+
+for(w in dimsNames){
+  tStart <- Sys.time()
+  for(s in 1:sims){
+    if(s<10) n <- paste0(w, "_sim", "0", s)
+    else n <- paste0(w, "_sim", s)
+
+    thisClick <- clicks[[w]]
+    thisClick$x1 <- atRisk[[w]][[s]]$time[1]
+    thisClick$x2 <- tail(atRisk[[w]][[s]]$time, 1)
+    
+    nam <- paste0("r_", w, "0", s)
+    tryCatch({
+      r <- survThief(paste0("plots/", n, ".png"),
+                     method = "guyot",
+                     atRisk[[w]][[s]],
+                     clickData = thisClick,
+                     quantization = T)
+      stop("no error")
+    }, error=function(e) {cat("ERROR :",conditionMessage(e), "\n")})
+
+    IPDRec[[w]][[s]] <- r$survData
+    
+    ## save(d, file = paste0(n, "/", n, ".RData"))
+    print(paste0(n, ".png"))
+  }
+  tEnd <- Sys.time()
+  runTimes[[w]] <- (tEnd - tStart) / sims
+}
+
+save(runTimes, file = "runTimesGuyot.RData")
+save(IPDRec, file = "IPDRecGuyot.RData")
+
+
+sims <- 50
+dims <- c(500,1000,2000)
+
+## plot
+for(w in 1:3){
+  for(s in 1:sims){
+    if(s<10) n <- paste0(dimsNames[w], "_sim", "0", s)
+    else n <- paste0(dimsNames[w], "_sim", s)
+    
+    d <- IPDRec[[w]][[s]]
+    fit <- survfit(Surv(time, status) ~ stratum, data=d)
+    p <- ggsurvplot(fit, risk.table = T, tables.theme = theme_cleantable(),
+                    risk.table.col = "strata", RUEpval = TRUE,
+                    ggtheme = theme_bw(), risk.table.y.text=F)
+    png(paste0("plotsRecGuyot/", n, ".png"), width=dims[w], height=dims[w])
+    print({p})
+    dev.off()
+    
+    print(paste0(n, ".png"))
+  }
+}

@@ -1,0 +1,117 @@
+
+
+#### adjCensored {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'adjCensored')))
+```
+
+#### censoredAtRisk {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'censoredAtRisk')))
+```
+
+#### detectCensoring {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'detectCensoring')))
+```
+
+#### digi {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'digi')))
+```
+
+#### digitData {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'digitData')))
+```
+
+#### fillGapStairs {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'fillGapStairs')))
+```
+
+#### fillGapStraight {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'fillGapStraight')))
+```
+
+#### getDeaths {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'getDeaths')))
+```
+
+#### getIndex {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'getIndex')))
+```
+
+#### getVals {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'getVals')))
+```
+
+#### guyot {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'guyot')))
+```
+
+#### instructCal {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'instructCal')))
+```
+
+#### jump {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'jump')))
+```
+
+#### quantize {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'quantize')))
+```
+
+#### readAndCal {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'readAndCal')))
+```
+
+#### readImg {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'readImg')))
+```
+
+#### rescale {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'rescale')))
+```
+
+#### similarColour {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'similarColour')))
+```
+
+#### spectrumBW {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'spectrumBW')))
+```
+
+#### strataData {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'strataData')))
+```
+
+#### survThief {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'survThief')))
+```
+
+#### walk {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'walk')))
+```
+
+#### whatColourIsThis {-}
+```{r, comment=NA}
+eval(parse(text=paste0('survThief:::', 'whatColourIsThis')))
+```
+
